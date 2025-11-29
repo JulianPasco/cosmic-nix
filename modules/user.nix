@@ -46,7 +46,7 @@
       cosmic-import = "/etc/nixos/scripts/sync-cosmic.sh import";
     };
     
-    initExtra = ''
+    initContent = ''
       # Custom prompt or additional config
       export EDITOR=nvim
     '';

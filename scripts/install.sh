@@ -208,6 +208,10 @@ nix-shell -p git --run "cd $INSTALL_DIR && sudo git add flake.lock && sudo git c
 echo -e "${YELLOW}Cleaning up old generations to free space...${NC}"
 sudo nix-collect-garbage -d || true
 
+# Use /var/tmp for build directory to avoid running out of RAM in tmpfs
+# This fixes "No space left on device" errors when building large packages like VS Code
+export TMPDIR=/var/tmp
+
 # Build and switch using nix-shell with git (required for flake evaluation)
 echo ""
 echo -e "${YELLOW}Building system configuration...${NC}"
