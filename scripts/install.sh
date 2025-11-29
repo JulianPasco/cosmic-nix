@@ -161,6 +161,7 @@ nix-shell -p git --run "cd $INSTALL_DIR && sudo git config user.email '$USER_EMA
 
 # Update flake inputs to get latest versions with correct hashes
 echo -e "${YELLOW}Updating flake inputs...${NC}"
+nix-shell -p git --run "cd $INSTALL_DIR && sudo nix flake lock --update-input nixos-cosmic --option experimental-features 'nix-command flakes'"
 nix-shell -p git --run "cd $INSTALL_DIR && sudo nix flake update --option experimental-features 'nix-command flakes'"
 
 # Commit the lock file
