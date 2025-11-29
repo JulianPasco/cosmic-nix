@@ -3,8 +3,8 @@ result
 result-*
 .direnv/
 
-# Generated config (contains personal info)
-user-config.nix
+# NOTE: user-config.nix is NOT gitignored because flakes require git-tracked files
+# It contains your username/email - not secrets, just personalization
 
 # Editor
 *.swp

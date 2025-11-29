@@ -155,6 +155,10 @@ echo -e "${GREEN}Created user-config.nix${NC}"
 # Make scripts executable
 sudo chmod +x "$INSTALL_DIR/scripts/"*.sh
 
+# Add user-config.nix to git (required for flakes to see it)
+echo -e "${YELLOW}Adding configuration to git...${NC}"
+nix-shell -p git --run "cd $INSTALL_DIR && sudo git add user-config.nix hosts/hardware-$HOST.nix && sudo git commit -m 'Add local configuration'"
+
 # Build and switch using nix-shell with git (required for flake evaluation)
 echo ""
 echo -e "${YELLOW}Building system configuration...${NC}"
