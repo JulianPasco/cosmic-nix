@@ -4,7 +4,7 @@
 {
   home.username = userConfig.username;
   home.homeDirectory = "/home/${userConfig.username}";
-  home.stateVersion = "25.05";
+  home.stateVersion = "25.11";
   home.enableNixpkgsReleaseCheck = false;
 
   # Let Home Manager manage itself

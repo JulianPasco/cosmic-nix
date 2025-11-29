@@ -2,12 +2,12 @@
   description = "Julian's NixOS COSMIC Desktop Configuration";
 
   inputs = {
-    # Use NixOS 25.05 - COSMIC is now in nixpkgs
-    nixpkgs.url = "github:NixOS/nixpkgs/nixos-25.05";
+    # Use NixOS Unstable (25.11) for latest COSMIC
+    nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
 
     # Home Manager for user-level configuration
     home-manager = {
-      url = "github:nix-community/home-manager/release-25.05";
+      url = "github:nix-community/home-manager/master";
       inputs.nixpkgs.follows = "nixpkgs";
     };
   };
