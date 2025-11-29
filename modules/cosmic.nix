@@ -125,8 +125,6 @@
     lsof
     pciutils
     usbutils
-    ddrescue
-    ddrescueview
     preload
   ];
 
