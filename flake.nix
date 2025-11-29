@@ -33,6 +33,7 @@
         home-manager = {
           useGlobalPkgs = true;
           useUserPackages = true;
+          backupFileExtension = "backup";
           extraSpecialArgs = specialArgs;
           users.${userConfig.username} = import ./modules/user.nix;
         };
