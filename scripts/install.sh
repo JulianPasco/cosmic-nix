@@ -160,20 +160,13 @@ echo -e "${GREEN}Created user-config.nix${NC}"
 # Make scripts executable
 sudo chmod +x "$INSTALL_DIR/scripts/"*.sh
 
-# Enable flakes if not already
-echo -e "${YELLOW}Ensuring flakes are enabled...${NC}"
-if ! grep -q "experimental-features" /etc/nix/nix.conf 2>/dev/null; then
-    sudo mkdir -p /etc/nix
-    echo "experimental-features = nix-command flakes" | sudo tee -a /etc/nix/nix.conf
-fi
-
-# Build and switch
+# Build and switch (pass experimental-features flag for flakes support)
 echo ""
 echo -e "${YELLOW}Building system configuration...${NC}"
 echo -e "${BLUE}This will download and build all packages (may take 10-30 minutes)${NC}"
 echo ""
 
-if sudo nixos-rebuild switch --flake "$INSTALL_DIR#$HOST"; then
+if sudo nixos-rebuild switch --flake "$INSTALL_DIR#$HOST" --extra-experimental-features "nix-command flakes"; then
     echo ""
     echo -e "${GREEN}======================================${NC}"
     echo -e "${GREEN}  Installation complete!${NC}"
