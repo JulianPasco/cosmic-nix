@@ -8,7 +8,7 @@ Modern NixOS configuration with COSMIC desktop environment, using flakes and Hom
 - **Flakes** - Reproducible, composable Nix configuration
 - **Home Manager** - Declarative user environment management
 - **Multi-host** - Support for work and home machines
-- **Extra Applets** - minimon, clipboard manager, weather, and more
+- **Extra Applets** - Additional COSMIC applets (currently disabled due to upstream issues)
 - **COSMIC Config Sync** - GUI-editable settings synced via git
 
 ## Quick Install
@@ -32,8 +32,7 @@ chmod +x /tmp/cosmic-nix/scripts/install.sh
 ```
 cosmic-nix/
 ├── flake.nix                 # Main flake configuration
-├── user-config.nix.example   # Template for user config
-├── user-config.nix           # Your config (generated, NOT in git)
+├── user-config.nix           # Your config (placeholder, overwritten on install)
 ├── modules/
 │   ├── common.nix            # System: packages, user, nix settings
 │   ├── cosmic.nix            # Desktop: COSMIC, apps, fonts
@@ -49,7 +48,7 @@ cosmic-nix/
 └── cosmic-config/            # Synced COSMIC GUI settings
 ```
 
-> **Note**: `user-config.nix` is generated during installation and gitignored (contains personal info). Hardware files are overwritten with your actual hardware config during install.
+> **Note**: `user-config.nix` is overwritten during installation with your details (username, email, timezone). Hardware files are generated with your actual hardware config during install.
 
 ## Usage
 
@@ -144,26 +143,18 @@ cd ~/dotfiles-private
 
 ### Edit User Config
 
-User configuration is stored in `user-config.nix` (generated during install, not tracked in git).
+User configuration is stored in `user-config.nix` (generated during install).
 
 To modify, edit the file directly:
 
-```nix
-# user-config.nix
-{
-  username = "your-username";
-  fullName = "Your Full Name";
-  email = "your.email@example.com";
-  timezone = "Africa/Johannesburg";
-  locale = "en_ZA.UTF-8";
-}
+```bash
+sudo nano /etc/nixos/user-config.nix
 ```
 
-Or copy the example and edit:
+Then rebuild:
 
 ```bash
-sudo cp /etc/nixos/user-config.nix.example /etc/nixos/user-config.nix
-sudo nano /etc/nixos/user-config.nix
+sudo nixos-rebuild switch --flake /etc/nixos
 ```
 
 ### Add Packages
@@ -198,15 +189,16 @@ Add to `modules/cosmic.nix`:
 programs.steam.enable = true;
 ```
 
-## Included Applets
+## Extra Applets
 
-From [ext-cosmic-applets-flake](https://github.com/wingej0/ext-cosmic-applets-flake):
+Additional COSMIC applets from [ext-cosmic-applets-flake](https://github.com/wingej0/ext-cosmic-applets-flake) are **currently disabled** due to upstream hash mismatch issues.
 
-- **minimon** - System monitor applet
-- **clipboard-manager** - Clipboard history
-- **emoji-selector** - Quick emoji picker
-- **weather** - Weather applet
-- **caffeine** - Prevent screen sleep
+Once fixed, uncomment in `modules/cosmic.nix`:
+```nix
+inputs.cosmic-applets-collection.packages.${system}.default
+```
+
+Available applets include: minimon, clipboard-manager, emoji-selector, weather, caffeine.
 
 ## Troubleshooting
 
