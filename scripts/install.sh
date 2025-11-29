@@ -137,7 +137,8 @@ sudo nixos-generate-config --show-hardware-config | sudo tee "$INSTALL_DIR/hosts
 
 # Remove swapDevices to prevent boot hangs on unformatted/missing partitions
 # This is a safety measure for the automated install
-sudo sed -i '/swapDevices/,/];/d' "$INSTALL_DIR/hosts/hardware-$HOST.nix"
+# We comment out the block instead of deleting to avoid syntax errors
+sudo sed -i '/swapDevices/,/];/s/^/#/' "$INSTALL_DIR/hosts/hardware-$HOST.nix"
 
 # Generate user configuration file
 echo -e "${YELLOW}Generating user configuration...${NC}"
