@@ -204,6 +204,10 @@ nix-shell -p git --run "cd $INSTALL_DIR && sudo nix flake update --option experi
 # Commit the lock file
 nix-shell -p git --run "cd $INSTALL_DIR && sudo git add flake.lock && sudo git commit -m 'Update flake.lock' || true"
 
+# Run garbage collection to free up space for build
+echo -e "${YELLOW}Cleaning up old generations to free space...${NC}"
+sudo nix-collect-garbage -d || true
+
 # Build and switch using nix-shell with git (required for flake evaluation)
 echo ""
 echo -e "${YELLOW}Building system configuration...${NC}"
