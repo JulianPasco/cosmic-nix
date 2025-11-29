@@ -157,7 +157,7 @@ sudo chmod +x "$INSTALL_DIR/scripts/"*.sh
 
 # Add user-config.nix to git (required for flakes to see it)
 echo -e "${YELLOW}Adding configuration to git...${NC}"
-nix-shell -p git --run "cd $INSTALL_DIR && sudo git add user-config.nix hosts/hardware-$HOST.nix && sudo git commit -m 'Add local configuration'"
+nix-shell -p git --run "cd $INSTALL_DIR && sudo git config user.email '$USER_EMAIL' && sudo git config user.name '$USER_FULLNAME' && sudo git add user-config.nix hosts/hardware-$HOST.nix && sudo git commit -m 'Add local configuration'"
 
 # Build and switch using nix-shell with git (required for flake evaluation)
 echo ""
