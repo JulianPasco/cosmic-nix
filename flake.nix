@@ -2,29 +2,17 @@
   description = "Julian's NixOS COSMIC Desktop Configuration";
 
   inputs = {
-    # Use latest nixpkgs unstable for COSMIC
-    nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
-
-    # COSMIC desktop flake - use latest
-    nixos-cosmic = {
-      url = "github:lilyinstarlight/nixos-cosmic";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
+    # Use NixOS 25.05 - COSMIC is now in nixpkgs
+    nixpkgs.url = "github:NixOS/nixpkgs/nixos-25.05";
 
     # Home Manager for user-level configuration
     home-manager = {
-      url = "github:nix-community/home-manager";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
-    # Additional COSMIC applets (currently disabled due to build issues)
-    cosmic-applets-collection = {
-      url = "github:wingej0/ext-cosmic-applets-flake";
+      url = "github:nix-community/home-manager/release-25.05";
       inputs.nixpkgs.follows = "nixpkgs";
     };
   };
 
-  outputs = { self, nixpkgs, nixos-cosmic, home-manager, cosmic-applets-collection, ... }@inputs:
+  outputs = { self, nixpkgs, home-manager, ... }@inputs:
   let
     system = "x86_64-linux";
     
@@ -35,14 +23,10 @@
     # Common specialArgs passed to all modules
     specialArgs = {
       inherit inputs userConfig;
-      inherit (inputs) cosmic-applets-collection;
     };
 
     # Common modules for all hosts
     commonModules = [
-      # COSMIC desktop module
-      nixos-cosmic.nixosModules.default
-      
       # Home Manager integration
       home-manager.nixosModules.home-manager
       {

@@ -1,9 +1,6 @@
 # COSMIC Desktop Environment configuration
-{ config, pkgs, lib, inputs, ... }:
+{ config, pkgs, lib, ... }:
 
-let
-  system = pkgs.system;
-in
 {
   # Enable X server (required for some apps)
   services.xserver.enable = true;
@@ -63,8 +60,22 @@ in
     cosmic-icons
     cosmic-wallpapers
     
-    # Extra COSMIC applets - TEMPORARILY DISABLED due to upstream hash mismatch
-    # Uncomment when fixed: inputs.cosmic-applets-collection.packages.${system}.default
+    # Extra COSMIC packages from nixpkgs
+    cosmic-player
+    cosmic-settings
+    cosmic-osd
+    cosmic-idle
+    cosmic-notifications
+    cosmic-launcher
+    cosmic-settings-daemon
+    cosmic-session
+    cosmic-panel
+    cosmic-randr
+    cosmic-workspaces-epoch
+    cosmic-protocols
+    cosmic-applets
+    xdg-desktop-portal-cosmic
+    
     
     # --- Browsers ---
     firefox
