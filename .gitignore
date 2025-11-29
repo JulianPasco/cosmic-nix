@@ -1,0 +1,30 @@
+# Nix
+result
+result-*
+.direnv/
+
+# Generated config (contains personal info)
+user-config.nix
+
+# Editor
+*.swp
+*.swo
+*~
+.vscode/
+.idea/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Secrets - NEVER commit these
+*.key
+*.pem
+id_rsa*
+id_ed25519
+*.gpg
+
+# Temporary files
+*.tmp
+*.log
+*.bak

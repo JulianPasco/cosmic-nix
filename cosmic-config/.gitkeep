@@ -1,0 +1,6 @@
+# Placeholder for COSMIC desktop configuration
+# This directory will be populated by running:
+#   /etc/nixos/scripts/sync-cosmic.sh export
+#
+# COSMIC stores its config in ~/.config/cosmic/
+# The sync script copies it here for version control
