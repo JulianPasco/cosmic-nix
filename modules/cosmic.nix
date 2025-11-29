@@ -51,7 +51,7 @@
     cosmic-edit
     cosmic-files
     cosmic-term
-    cosmic-store
+    #cosmic-store
     cosmic-screenshot
     cosmic-icons
     cosmic-wallpapers
@@ -71,7 +71,7 @@
     cosmic-protocols
     cosmic-applets
     xdg-desktop-portal-cosmic
-    
+    quick-webapps
     
     # --- Browsers ---
     firefox
@@ -87,6 +87,8 @@
     neovim
     nodejs_22
     python3
+    windsurf
+
     
     # --- CLI Tools ---
     wget
@@ -123,12 +125,15 @@
     lsof
     pciutils
     usbutils
+    ddrescue
+    ddrescueview
+    preload
   ];
 
-  # Firefox as default browser
+  #Firefox as default browser
   programs.firefox.enable = true;
 
-  # Enable dconf for GTK app settings
+  #Enable dconf for GTK app settings
   programs.dconf.enable = true;
 
   # Font configuration
