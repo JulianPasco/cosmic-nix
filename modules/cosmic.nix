@@ -9,10 +9,6 @@
   services.desktopManager.cosmic.enable = true;
   services.displayManager.cosmic-greeter.enable = true;
 
-  # Disable other display managers
-  services.displayManager.gdm.enable = lib.mkForce false;
-  services.desktopManager.gnome.enable = lib.mkForce false;
-
   # Keyboard layout
   services.xserver.xkb = {
     layout = "za";
