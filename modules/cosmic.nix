@@ -79,6 +79,7 @@
     
     # --- Office ---
     onlyoffice-desktopeditors
+    nextcloud-client
     
     # --- Development ---
     vscode
@@ -88,6 +89,12 @@
     nodejs_22
     python3
     windsurf
+    postman
+    github-desktop
+
+    # --- Social ---
+    zapzap
+    telegram-desktop
 
     
     # --- CLI Tools ---
@@ -118,6 +125,9 @@
     
     # --- Remote Access ---
     remmina
+    bitwarden-desktop
+    rustdesk
+    anydesk
     
     # --- Utilities ---
     xclip
@@ -126,6 +136,9 @@
     pciutils
     usbutils
     preload
+    resources
+    popsicle
+    xdiskusage
   ];
 
   #Firefox as default browser
