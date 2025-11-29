@@ -40,35 +40,32 @@ if [ ! -f /etc/NIXOS ]; then
     exit 1
 fi
 
-# Ensure git is available
-if ! command -v git &> /dev/null; then
-    echo -e "${YELLOW}Installing git temporarily...${NC}"
-    nix-shell -p git --run "echo 'Git available'"
-fi
-
 echo -e "${BLUE}Welcome to the NixOS COSMIC installer${NC}"
 echo ""
 
-# Collect user information
+# Collect user information (read from /dev/tty to work with piped input)
 echo -e "${CYAN}Let's configure your system${NC}"
 echo ""
 
 while [ -z "${USER_NAME:-}" ]; do
-    read -p "Your username: " USER_NAME
+    echo -n "Your username: "
+    read USER_NAME < /dev/tty
     if [ -z "$USER_NAME" ]; then
         echo -e "${RED}Username cannot be empty${NC}"
     fi
 done
 
 while [ -z "${USER_FULLNAME:-}" ]; do
-    read -p "Your full name: " USER_FULLNAME
+    echo -n "Your full name: "
+    read USER_FULLNAME < /dev/tty
     if [ -z "$USER_FULLNAME" ]; then
         echo -e "${RED}Name cannot be empty${NC}"
     fi
 done
 
 while [ -z "${USER_EMAIL:-}" ]; do
-    read -p "Your email: " USER_EMAIL
+    echo -n "Your email: "
+    read USER_EMAIL < /dev/tty
     if [ -z "$USER_EMAIL" ]; then
         echo -e "${RED}Email cannot be empty${NC}"
     fi
@@ -77,12 +74,14 @@ done
 # Timezone
 echo ""
 echo -e "${CYAN}Timezone (press Enter for default: Africa/Johannesburg)${NC}"
-read -p "Timezone: " USER_TIMEZONE
+echo -n "Timezone: "
+read USER_TIMEZONE < /dev/tty
 USER_TIMEZONE=${USER_TIMEZONE:-"Africa/Johannesburg"}
 
 # Locale
 echo -e "${CYAN}Locale (press Enter for default: en_ZA.UTF-8)${NC}"
-read -p "Locale: " USER_LOCALE
+echo -n "Locale: "
+read USER_LOCALE < /dev/tty
 USER_LOCALE=${USER_LOCALE:-"en_ZA.UTF-8"}
 
 echo ""
@@ -92,7 +91,8 @@ while true; do
     echo -e "${CYAN}Which machine is this?${NC}"
     echo "1) work"
     echo "2) home"
-    read -p "Enter choice (1 or 2): " choice
+    echo -n "Enter choice (1 or 2): "
+    read choice < /dev/tty
     
     case $choice in
         1) HOST="work"; break ;;
@@ -111,7 +111,8 @@ echo "  Locale:   $USER_LOCALE"
 echo "  Host:     $HOST"
 echo ""
 
-read -p "Continue with installation? (y/N) " -n 1 -r
+echo -n "Continue with installation? (y/N) "
+read -n 1 REPLY < /dev/tty
 echo ""
 
 if [[ ! $REPLY =~ ^[Yy]$ ]]; then
@@ -126,9 +127,13 @@ if [ -d "$INSTALL_DIR" ]; then
     sudo mv "$INSTALL_DIR" "$BACKUP_DIR"
 fi
 
-# Clone repository
+# Clone repository (use nix-shell for git if not available)
 echo -e "${YELLOW}Cloning configuration from $REPO_URL${NC}"
-sudo git clone "$REPO_URL" "$INSTALL_DIR"
+if command -v git &> /dev/null; then
+    sudo git clone "$REPO_URL" "$INSTALL_DIR"
+else
+    sudo nix-shell -p git --run "git clone $REPO_URL $INSTALL_DIR"
+fi
 
 # Generate hardware configuration
 echo -e "${YELLOW}Generating hardware configuration...${NC}"
