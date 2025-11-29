@@ -63,8 +63,8 @@ in
     cosmic-icons
     cosmic-wallpapers
     
-    # Extra COSMIC applets (minimon, clipboard, weather, emoji, caffeine)
-    inputs.cosmic-applets-collection.packages.${system}.default
+    # Extra COSMIC applets - TEMPORARILY DISABLED due to upstream hash mismatch
+    # Uncomment when fixed: inputs.cosmic-applets-collection.packages.${system}.default
     
     # --- Browsers ---
     firefox
