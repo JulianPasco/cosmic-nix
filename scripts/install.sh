@@ -159,6 +159,13 @@ sudo chmod +x "$INSTALL_DIR/scripts/"*.sh
 echo -e "${YELLOW}Adding configuration to git...${NC}"
 nix-shell -p git --run "cd $INSTALL_DIR && sudo git config user.email '$USER_EMAIL' && sudo git config user.name '$USER_FULLNAME' && sudo git add user-config.nix hosts/hardware-$HOST.nix && sudo git commit -m 'Add local configuration'"
 
+# Update flake inputs to get latest versions with correct hashes
+echo -e "${YELLOW}Updating flake inputs...${NC}"
+nix-shell -p git --run "cd $INSTALL_DIR && sudo nix flake update --option experimental-features 'nix-command flakes'"
+
+# Commit the lock file
+nix-shell -p git --run "cd $INSTALL_DIR && sudo git add flake.lock && sudo git commit -m 'Update flake.lock' || true"
+
 # Build and switch using nix-shell with git (required for flake evaluation)
 echo ""
 echo -e "${YELLOW}Building system configuration...${NC}"
