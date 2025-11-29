@@ -53,36 +53,49 @@ while [ -z "${USER_NAME:-}" ]; do
     if [ -z "$USER_NAME" ]; then
         echo -e "${RED}Username cannot be empty${NC}"
     fi
-done
+fi
 
-while [ -z "${USER_FULLNAME:-}" ]; do
-    echo -n "Your full name: "
-    read USER_FULLNAME < /dev/tty
-    if [ -z "$USER_FULLNAME" ]; then
-        echo -e "${RED}Name cannot be empty${NC}"
-    fi
-done
+if [ "$USE_EXISTING_CONFIG" != "true" ]; then
+    echo -e "${CYAN}Let's configure your system${NC}"
+    echo ""
 
-while [ -z "${USER_EMAIL:-}" ]; do
-    echo -n "Your email: "
-    read USER_EMAIL < /dev/tty
-    if [ -z "$USER_EMAIL" ]; then
-        echo -e "${RED}Email cannot be empty${NC}"
-    fi
-done
+    while [ -z "${USER_NAME:-}" ]; do
+        echo -n "Your username: "
+        read USER_NAME < /dev/tty
+        if [ -z "$USER_NAME" ]; then
+            echo -e "${RED}Username cannot be empty${NC}"
+        fi
+    done
 
-# Timezone
-echo ""
-echo -e "${CYAN}Timezone (press Enter for default: Africa/Johannesburg)${NC}"
-echo -n "Timezone: "
-read USER_TIMEZONE < /dev/tty
-USER_TIMEZONE=${USER_TIMEZONE:-"Africa/Johannesburg"}
+    while [ -z "${USER_FULLNAME:-}" ]; do
+        echo -n "Your full name: "
+        read USER_FULLNAME < /dev/tty
+        if [ -z "$USER_FULLNAME" ]; then
+            echo -e "${RED}Name cannot be empty${NC}"
+        fi
+    done
 
-# Locale
-echo -e "${CYAN}Locale (press Enter for default: en_ZA.UTF-8)${NC}"
-echo -n "Locale: "
-read USER_LOCALE < /dev/tty
-USER_LOCALE=${USER_LOCALE:-"en_ZA.UTF-8"}
+    while [ -z "${USER_EMAIL:-}" ]; do
+        echo -n "Your email: "
+        read USER_EMAIL < /dev/tty
+        if [ -z "$USER_EMAIL" ]; then
+            echo -e "${RED}Email cannot be empty${NC}"
+        fi
+    done
+
+    # Timezone
+    echo ""
+    echo -e "${CYAN}Timezone (press Enter for default: Africa/Johannesburg)${NC}"
+    echo -n "Timezone: "
+    read USER_TIMEZONE < /dev/tty
+    USER_TIMEZONE=${USER_TIMEZONE:-"Africa/Johannesburg"}
+
+    # Locale
+    echo -e "${CYAN}Locale (press Enter for default: en_ZA.UTF-8)${NC}"
+    echo -n "Locale: "
+    read USER_LOCALE < /dev/tty
+    USER_LOCALE=${USER_LOCALE:-"en_ZA.UTF-8"}
+fi
 
 echo ""
 
