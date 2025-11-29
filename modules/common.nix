@@ -88,5 +88,5 @@
 
   # This value determines the NixOS release
   # Do NOT change this after initial install
-  system.stateVersion = "25.11";
+  system.stateVersion = "25.05";
 }

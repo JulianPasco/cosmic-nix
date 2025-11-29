@@ -2,14 +2,14 @@
   description = "Julian's NixOS COSMIC Desktop Configuration";
 
   inputs = {
-    # Use nixos-cosmic's nixpkgs for best compatibility
-    nixpkgs.follows = "nixos-cosmic/nixpkgs";
-    
-    # For stable fallback if needed
-    nixpkgs-stable.url = "github:NixOS/nixpkgs/nixos-25.11";
+    # Use latest nixpkgs unstable for COSMIC
+    nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
 
-    # COSMIC desktop flake
-    nixos-cosmic.url = "github:lilyinstarlight/nixos-cosmic";
+    # COSMIC desktop flake - use latest
+    nixos-cosmic = {
+      url = "github:lilyinstarlight/nixos-cosmic";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
 
     # Home Manager for user-level configuration
     home-manager = {
@@ -17,11 +17,14 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    # Additional COSMIC applets (minimon, clipboard manager, etc.)
-    cosmic-applets-collection.url = "github:wingej0/ext-cosmic-applets-flake";
+    # Additional COSMIC applets (currently disabled due to build issues)
+    cosmic-applets-collection = {
+      url = "github:wingej0/ext-cosmic-applets-flake";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
-  outputs = { self, nixpkgs, nixpkgs-stable, nixos-cosmic, home-manager, cosmic-applets-collection, ... }@inputs:
+  outputs = { self, nixpkgs, nixos-cosmic, home-manager, cosmic-applets-collection, ... }@inputs:
   let
     system = "x86_64-linux";
     
