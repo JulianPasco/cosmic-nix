@@ -131,9 +131,13 @@ fi
 echo -e "${YELLOW}Cloning configuration from $REPO_URL${NC}"
 nix-shell -p git --run "sudo git clone $REPO_URL $INSTALL_DIR"
 
-# Generate hardware configuration
+# Generate hardware config
 echo -e "${YELLOW}Generating hardware configuration...${NC}"
 sudo nixos-generate-config --show-hardware-config | sudo tee "$INSTALL_DIR/hosts/hardware-$HOST.nix" > /dev/null
+
+# Remove swapDevices to prevent boot hangs on unformatted/missing partitions
+# This is a safety measure for the automated install
+sudo sed -i '/swapDevices/,/];/d' "$INSTALL_DIR/hosts/hardware-$HOST.nix"
 
 # Generate user configuration file
 echo -e "${YELLOW}Generating user configuration...${NC}"
