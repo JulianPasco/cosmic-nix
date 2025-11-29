@@ -13,8 +13,8 @@ in
   services.displayManager.cosmic-greeter.enable = true;
 
   # Disable other display managers
-  services.xserver.displayManager.gdm.enable = lib.mkForce false;
-  services.xserver.desktopManager.gnome.enable = lib.mkForce false;
+  services.displayManager.gdm.enable = lib.mkForce false;
+  services.desktopManager.gnome.enable = lib.mkForce false;
 
   # Keyboard layout
   services.xserver.xkb = {
@@ -135,7 +135,8 @@ in
       fira-code
       fira-code-symbols
       jetbrains-mono
-      (nerdfonts.override { fonts = [ "FiraCode" "JetBrainsMono" ]; })
+      nerd-fonts.fira-code
+      nerd-fonts.jetbrains-mono
     ];
     fontconfig = {
       defaultFonts = {

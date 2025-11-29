@@ -5,6 +5,7 @@
   home.username = userConfig.username;
   home.homeDirectory = "/home/${userConfig.username}";
   home.stateVersion = "25.11";
+  home.enableNixpkgsReleaseCheck = false;
 
   # Let Home Manager manage itself
   programs.home-manager.enable = true;
@@ -15,9 +16,9 @@
   # Git configuration
   programs.git = {
     enable = true;
-    userName = userConfig.fullName;
-    userEmail = userConfig.email;
-    extraConfig = {
+    settings = {
+      user.name = userConfig.fullName;
+      user.email = userConfig.email;
       init.defaultBranch = "main";
       pull.rebase = true;
       push.autoSetupRemote = true;
@@ -45,7 +46,7 @@
       cosmic-import = "/etc/nixos/scripts/sync-cosmic.sh import";
     };
     
-    initExtra = ''
+    initContent = ''
       # Custom prompt or additional config
       export EDITOR=nvim
     '';
