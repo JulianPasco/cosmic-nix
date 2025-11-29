@@ -160,13 +160,6 @@ echo -e "${GREEN}Created user-config.nix${NC}"
 # Make scripts executable
 sudo chmod +x "$INSTALL_DIR/scripts/"*.sh
 
-# Mark directory as safe for git (use nix-shell if git not available)
-if command -v git &> /dev/null; then
-    sudo git config --global --add safe.directory "$INSTALL_DIR"
-else
-    sudo nix-shell -p git --run "git config --global --add safe.directory $INSTALL_DIR"
-fi
-
 # Enable flakes if not already
 echo -e "${YELLOW}Ensuring flakes are enabled...${NC}"
 if ! grep -q "experimental-features" /etc/nix/nix.conf 2>/dev/null; then
