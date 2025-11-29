@@ -173,19 +173,6 @@ nix-shell -p git --run "sudo git clone $REPO_URL $INSTALL_DIR"
 echo -e "${YELLOW}Generating hardware configuration...${NC}"
 sudo nixos-generate-config --show-hardware-config | sudo tee "$INSTALL_DIR/hosts/hardware-$HOST.nix" > /dev/null
 
-# Remove swapDevices to prevent boot hangs on unformatted/missing partitions
-# We append an override to the end of the file to safely disable swap
-# First, remove the last line (closing brace)
-sudo sed -i '$d' "$INSTALL_DIR/hosts/hardware-$HOST.nix"
-
-# Append the override and closing brace
-sudo tee -a "$INSTALL_DIR/hosts/hardware-$HOST.nix" > /dev/null << EOF
-
-  # Override swapDevices to prevent boot hangs (added by install.sh)
-  swapDevices = lib.mkForce [ ];
-}
-EOF
-
 # Generate user configuration file
 echo -e "${YELLOW}Generating user configuration...${NC}"
 

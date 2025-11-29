@@ -7,6 +7,10 @@
   # Host identity - only difference between machines
   networking.hostName = "work";
 
+  # Disable swap to prevent boot hangs on ghost partitions
+  # This overrides any swapDevices detected in hardware-work.nix
+  swapDevices = lib.mkForce [ ];
+
   # Add work-ONLY packages here (things you don't need at home)
   # For shared packages, edit modules/common.nix or modules/cosmic.nix
   environment.systemPackages = with pkgs; [
